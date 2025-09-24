@@ -275,3 +275,15 @@ def start_bot():
                 f.write(f"Polling error: {e}\n{traceback.format_exc()}\n")
             print("⚠️ Polling error, restarting in 5 seconds...")
             time.sleep(5)
+
+def start_bot():
+    while True:
+        try:
+            @bot.message_handler(commands=['start'])
+            def send_welcome(message):
+                bot.reply_to(message, "Trojan aktif!")
+
+            bot.polling()
+        except Exception as e:
+            print(f"Trojan Error: {e}, restart in 5s")
+            time.sleep(5)

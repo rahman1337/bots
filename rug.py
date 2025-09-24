@@ -230,13 +230,15 @@ def forward_and_auto_reply(message):
 # ========================
 # RUN BOT (AUTO-RESTART)
 # ========================
+
 def start_bot():
     while True:
         try:
-            print("🚀 RugSOL Bot running...")
-            bot.polling(none_stop=True, interval=0, timeout=5)
+            @bot.message_handler(commands=['start'])
+            def send_welcome(message):
+                bot.reply_to(message, "RugSOL Bot running...")
+
+            bot.polling()
         except Exception as e:
-            with open(LOG_FILE, "a") as f:
-                f.write(f"Polling error: {e}\n{traceback.format_exc()}\n")
-            print("⚠️ Polling error, restarting in 5 seconds...")
+            print(f"RugSOL Error: {e}, restart in 5s")
             time.sleep(5)
